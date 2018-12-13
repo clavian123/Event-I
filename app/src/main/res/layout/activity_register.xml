@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="39dp"
+        android:text="EVENT-I"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="30dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvRegistration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="REGISTRATION"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvREmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Email:" />
+
+    <EditText
+        android:id="@+id/txtREmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvREmail"
+        android:layout_marginLeft="70dp"
+        android:ems="12"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/tvRUsername"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@+id/txtREmail"
+        android:ems="10"
+        android:text="Username:"
+        android:textSize="15dp"/>
+
+    <EditText
+        android:id="@+id/txtRUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRUsername"
+        android:layout_marginLeft="70dp"
+        android:ems="12"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/tvRPassword"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@+id/txtRUsername"
+        android:ems="10"
+        android:text="Password:"
+        android:textSize="15dp"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/InputLayoutR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/tvRPassword"
+        android:orientation="vertical"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/txtRPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:ems="12"
+            android:hint="6 characters min."
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvRConfPassword"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@+id/InputLayoutR"
+        android:ems="10"
+        android:text="Confirm Password:"
+        android:textSize="15dp"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/InputLayoutR2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/tvRConfPassword"
+        android:orientation="vertical"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/txtRConfPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:ems="12"
+            android:hint="Re-type your password"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/cbTerms"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_below="@id/InputLayoutR2"
+        android:text="I AGREE to the terms and agreement" />
+
+    <Button
+        android:id="@+id/btRegister"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cbTerms"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="10dp"
+        android:text="Submit" />
+
+
+
+</LinearLayout>
