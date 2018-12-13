@@ -23,6 +23,11 @@ public class RegisterActivity extends AppCompatActivity {
     CheckBox cbTerms;
     String emailPattern;
 
+    /**
+     * TODO
+     * 1. Implementation Firebase
+     * 2. Register with Firebase*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

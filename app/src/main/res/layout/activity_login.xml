@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="@color/colorRed"
+    android:background="@drawable/bg_app"
     android:orientation="vertical">
 
     <TextView
@@ -95,17 +95,17 @@
         android:gravity="center"/>
 
     <Button
-        android:layout_marginTop="10dp"
         android:layout_width="260dp"
-        android:layout_gravity="center"
         android:layout_height="45dp"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="15dp"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="15dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_login"
         android:drawableLeft="@drawable/facebook"
+        android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
         android:text="LOGIN WITH FACEBOOK"
-        android:background="@drawable/btn_login"/>
+        android:textColor="@android:color/white"
+        android:textSize="15dp" />
 
 </LinearLayout>

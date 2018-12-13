@@ -5,4 +5,5 @@ import java.util.Vector;
 
 public class Data {
     public static ArrayList<User> userList = new ArrayList<>();
+    public static ArrayList<Event> eventList = new ArrayList<>();
 }

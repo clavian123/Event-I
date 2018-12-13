@@ -20,6 +20,14 @@ public class LoginActivity extends AppCompatActivity {
     String Password;
     CheckBox cbTerms;
 
+    /**
+     * TODO
+     * 1. Implementation Firebase
+     * 2. Login data From Firebase
+     * 3. Login with Facebook
+     * 4. Login with Google Account
+     * 5. Custom Login for Event Organizer*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

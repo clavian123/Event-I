@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#068587</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGreen">#00FF00</color>
     <color name="colorDarkGreen">#99FF00</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorFacebook">#3b5998</color>
+
+
+    <!--Color from Adobe XD-->
+    <color name="colorGreen1">#2FD15A</color>
+    <color name="colorRed1">#DC4E41</color>
+    <color name="colorBlue1">#4867AA</color>
+    <color name="colorBgLight">#4FB99F</color>
+    <color name="colorBgDark">#068587</color>
 </resources>
