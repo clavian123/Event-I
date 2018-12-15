@@ -4,34 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailEventActivity">
-    
+    tools:context=".AddEventActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/detailEventImage"
+            android:id="@+id/addEventImage"
             android:layout_width="match_parent"
             android:layout_height="202dp"
             android:scaleType="fitXY"
-            tools:srcCompat="@tools:sample/backgrounds/scenic[7]" />
+            tools:srcCompat="@tools:sample/backgrounds/scenic[7]"
+            android:onClick="changeImage"/>
 
-        <TextView
-            android:id="@+id/detailEventName"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        <EditText
+            android:id="@+id/addEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:hint="Event Name Here"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="24dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Konser ABC DEF GHI"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
-        <TextView
-            android:id="@+id/detailEventDetail"
+        <EditText
+            android:id="@+id/addEventDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Greyhound divisively hello coldly wonderfully marginally far upon excluding. Greyhound divisively hello coldly"
+            android:background="#fff"
+            android:hint="Event Description"
+            android:inputType="textMultiLine"
             android:layout_marginLeft="21dp"
             android:layout_marginTop="6dp"/>
 
@@ -50,73 +54,77 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tvDetailDate"
+                <EditText
+                    android:id="@+id/addEventDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#fff"
                     android:drawableStart="@drawable/calendar"
                     android:drawablePadding="10dp"
-                    android:text="TextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    android:enabled="false"
+                    android:hint="Event Date"
+                    android:onClick="changeDate"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDetailPrice"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.275" />
 
-                <TextView
-                    android:id="@+id/tvDetailPrice"
+                <EditText
+                    android:id="@+id/addEventPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#fff"
                     android:drawableStart="@drawable/money"
                     android:drawablePadding="10dp"
-                    android:text="TextView"
+                    android:enabled="false"
+                    android:hint="Event Price"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDetailDate"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/addEventDate" />
 
-                <TextView
-                    android:id="@+id/tvDetailLocation"
+                <EditText
+                    android:id="@+id/addEventLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#fff"
                     android:drawableStart="@drawable/map"
                     android:drawablePadding="10dp"
-                    android:text="TextView"
+                    android:enabled="false"
+                    android:hint="Event Venue"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.666"
-                    app:layout_constraintStart_toEndOf="@+id/tvEventDate"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/addEventDate"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.24" />
 
-                <TextView
-                    android:id="@+id/tvDetailType"
+                <EditText
+                    android:id="@+id/addEventType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="28dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#fff"
                     android:drawableStart="@drawable/group"
                     android:drawablePadding="10dp"
-                    android:text="TextView"
+                    android:enabled="false"
+                    android:hint="Event Type"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.708"
-                    app:layout_constraintStart_toEndOf="@+id/tvEventPrice"
-                    app:layout_constraintTop_toBottomOf="@+id/tvLocation"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintStart_toEndOf="@+id/addEventPrice"
+                    app:layout_constraintTop_toBottomOf="@+id/addEventLocation" />
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.CardView>
@@ -143,9 +151,9 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <!--Horizontal Phone and Email-->
-                
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -155,18 +163,21 @@
                         android:layout_height="40dp"
                         android:src="@drawable/contact"/>
 
-                    <TextView
-                        android:id="@+id/tvDetailContact"
-                        android:layout_marginLeft="29dp"
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/addEventPhone"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:hint="Phone Number"
                         android:layout_gravity="center_vertical"
-                        android:text="+6282122334455"/>
+                        android:inputType="phone"
+                        android:layout_marginLeft="29dp" />
+
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -176,13 +187,15 @@
                         android:layout_height="40dp"
                         android:src="@drawable/gmail"/>
 
-                    <TextView
-                        android:id="@+id/tvDetailEmail"
-                        android:layout_marginLeft="29dp"
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/addEventEmail"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:hint="Email"
                         android:layout_gravity="center_vertical"
-                        android:text="john.doe@mail.com"/>
+                        android:inputType="textEmailAddress"
+                        android:layout_marginLeft="29dp" />
 
                 </LinearLayout>
 
@@ -210,7 +223,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <EditText
-                    android:id="@+id/detailEventAddress"
+                    android:id="@+id/addEventAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#fff"
@@ -233,9 +246,21 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
         <com.google.android.gms.maps.MapView
-            android:id="@+id/mapDetail"
+            android:id="@+id/addMap"
             android:layout_width="match_parent"
             android:layout_height="267dp" />
+
+        <Button
+            android:id="@+id/btnAddEvent"
+            android:layout_width="260dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_green"
+            android:gravity="center"
+            android:text="ADD EVENT"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
 
     </LinearLayout>
 

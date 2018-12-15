@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.claviancandrian.myapplication">
+    package="com.project.claviancandrian.event_i">
 
     <application
         android:allowBackup="true"
@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ShowListActivity" />
-        <activity android:name=".DetailEventActivity"></activity>
+        <activity android:name=".DetailEventActivity" />
+        <activity android:name=".AddEventActivity" />
+        <activity android:name=".ModifyEventActivity" />
+        <activity android:name=".ForgetPasswordActivity"></activity>
     </application>
 
 </manifest>

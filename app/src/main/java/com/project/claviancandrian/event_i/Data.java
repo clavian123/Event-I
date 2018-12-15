@@ -1,7 +1,6 @@
-package com.example.claviancandrian.myapplication;
+package com.project.claviancandrian.event_i;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Data {
     public static ArrayList<User> userList = new ArrayList<>();

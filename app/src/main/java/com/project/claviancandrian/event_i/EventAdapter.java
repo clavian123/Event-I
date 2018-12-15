@@ -1,4 +1,4 @@
-package com.example.claviancandrian.myapplication;
+package com.project.claviancandrian.event_i;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.claviancandrian.myapplication;
+package com.project.claviancandrian.event_i;
 
 public class Event {
 

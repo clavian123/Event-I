@@ -1,4 +1,4 @@
-package com.example.claviancandrian.myapplication;
+package com.project.claviancandrian.event_i;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ public class ShowListActivity extends AppCompatActivity {
 
     /**
      * TODO
-     * 1. Implementation Firebase
      * 2. Get Event Data From Firebase
      * 3. Populate Event from Firebase
      * 4. Realtime Event List

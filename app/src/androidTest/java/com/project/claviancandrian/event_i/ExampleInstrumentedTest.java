@@ -1,4 +1,4 @@
-package com.example.claviancandrian.myapplication;
+package com.project.claviancandrian.event_i;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

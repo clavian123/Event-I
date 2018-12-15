@@ -49,14 +49,14 @@
         android:theme="@style/MyEditText" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
         android:textColor="@android:color/white"
         android:layout_marginTop="10dp"
         android:textSize="15dp"
-        android:layout_marginRight="62dp"
-        android:textAlignment="textEnd"/>
+        android:layout_gravity="right"
+        android:layout_marginRight="30dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
             android:id="@+id/btLogin"
             android:layout_width="120dp"
             android:layout_height="35dp"
-            android:background="@drawable/btn_shape_capsule"
+            android:background="@drawable/btn_green"
             android:text="Login"
             android:textSize="12dp"
             android:textColor="@android:color/white"/>
@@ -79,7 +79,7 @@
             android:id="@+id/btRegister"
             android:layout_width="120dp"
             android:layout_height="35dp"
-            android:background="@drawable/btn_shape_capsule"
+            android:background="@drawable/btn_green"
             android:text="Register"
             android:textSize="12dp"
             android:textColor="@android:color/white"/>
@@ -105,6 +105,20 @@
         android:paddingHorizontal="15dp"
         android:paddingVertical="10dp"
         android:text="LOGIN WITH FACEBOOK"
+        android:textColor="@android:color/white"
+        android:textSize="15dp" />
+
+    <Button
+        android:layout_width="260dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_red"
+        android:drawableLeft="@drawable/google"
+        android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
+        android:text="LOGIN WITH GOOGLE"
         android:textColor="@android:color/white"
         android:textSize="15dp" />
 
