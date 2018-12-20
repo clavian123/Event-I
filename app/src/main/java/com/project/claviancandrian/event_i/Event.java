@@ -1,7 +1,12 @@
 package com.project.claviancandrian.event_i;
 
+import android.net.Uri;
+
+import com.google.android.gms.tasks.Task;
+
 public class Event {
 
+    private String id;
     private String name;
     private String desc;
     private String location;
@@ -11,14 +16,18 @@ public class Event {
     private String cpEmail;
     private String cpTelp;
 
+    private String owner;
+
     private Double price;
 
-    private Integer image;
+    private String image;
+
 
     public Event() {
     }
 
-    public Event(String name, String desc, String location, String city, String type, String date, String cpEmail, String cpTelp, Double price) {
+    public Event(String id, String name, String desc, String location, String city, String type, String date, String cpEmail, String cpTelp, Double price, String owner, String image) {
+        this.id = id;
         this.name = name;
         this.desc = desc;
         this.location = location;
@@ -28,14 +37,32 @@ public class Event {
         this.cpEmail = cpEmail;
         this.cpTelp = cpTelp;
         this.price = price;
+        this.owner = owner;
+        this.image = image;
     }
 
-    public Integer getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Integer image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public String getName() {

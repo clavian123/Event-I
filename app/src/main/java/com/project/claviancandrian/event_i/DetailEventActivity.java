@@ -51,7 +51,7 @@ public class DetailEventActivity extends AppCompatActivity {
 
         if (bundle != null) {
             Integer pos = bundle.getInt("posisi");
-            detailEventImage.setImageResource(Data.eventList.get(pos).getImage());
+//            detailEventImage.setImageResource(Data.eventList.get(pos).getImage());
             detailEventName.setText(Data.eventList.get(pos).getName());
             detailEventDetail.setText(Data.eventList.get(pos).getDesc());
             tvDetailDate.setText(Data.eventList.get(pos).getDate());
@@ -62,7 +62,5 @@ public class DetailEventActivity extends AppCompatActivity {
             tvDetailEmail.setText(Data.eventList.get(pos).getCpEmail());
             detailEventAddress.setText(Data.eventList.get(pos).getCpEmail());
         }
-
-
     }
 }

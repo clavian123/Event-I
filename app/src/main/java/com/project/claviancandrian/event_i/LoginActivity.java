@@ -1,30 +1,35 @@
 package com.project.claviancandrian.event_i;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.tvForgotPassword)
+    TextView tvForgotPassword;
+    @BindView(R.id.progress)
+    ProgressBar progress;
     private FirebaseAuth mAuth;
 
     EditText txtEmail;
@@ -39,12 +44,14 @@ public class LoginActivity extends AppCompatActivity {
      * TODO
      * 3. Login with Facebook
      * 4. Login with Google Account
-     * 5. Custom Login for Event Organizer*/
+     * 5. Custom Login for Event Organizer
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
@@ -65,6 +72,9 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                progress.setVisibility(View.VISIBLE);
+
                 Email = txtEmail.getText().toString();
                 Password = txtPassword.getText().toString();
 
@@ -76,12 +86,17 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("Result", "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
+                                    Toast.makeText(LoginActivity.this, "Welcome " + user, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this, ShowListActivity.class);
+                                    intent.putExtra("user", user);
+                                    startActivity(intent);
+                                    progress.setVisibility(View.GONE);
 //                            updateUI(user);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("Result", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    progress.setVisibility(View.GONE);
 //                            updateUI(null);
                                 }
                                 // ...
@@ -129,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -141,5 +156,11 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 //        updateUI(currentUser);
+    }
+
+    @OnClick(R.id.tvForgotPassword)
+    public void onViewClicked() {
+        Intent intent = new Intent(this, ForgetPasswordActivity.class);
+        startActivity(intent);
     }
 }

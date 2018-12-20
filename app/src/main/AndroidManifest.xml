@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.project.claviancandrian.event_i">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,16 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity">
+        </activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ShowListActivity" >
+        </activity>
+        <activity android:name=".DetailEventActivity" />
+        <activity android:name=".AddEventActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ShowListActivity" />
-        <activity android:name=".DetailEventActivity" />
-        <activity android:name=".AddEventActivity" />
         <activity android:name=".ModifyEventActivity" />
         <activity android:name=".ForgetPasswordActivity"></activity>
     </application>

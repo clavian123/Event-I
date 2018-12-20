@@ -1,16 +1,42 @@
 package com.project.claviancandrian.event_i;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.Console;
+import java.io.IOException;
+import java.net.URI;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +68,19 @@ public class AddEventActivity extends AppCompatActivity {
     Button btnAddEvent;
 //    map initialize
 
+    private Uri filePath;
+
+    Uri downloadUrl;
+
+    private String imgUrl;
+
+    Boolean sucesss = false;
+
+    private final int PICK_IMAGE_REQUEST = 71;
+
     DatabaseReference myRef;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     /**TODO
      * Harusnya tinggal ambil lokasi dari gMap trus push*/
@@ -53,48 +91,127 @@ public class AddEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_event);
         ButterKnife.bind(this);
 
-        myRef = FirebaseDatabase.getInstance().getReference("event-i");
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        myRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @OnClick({R.id.addEventImage, R.id.btnAddEvent})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.addEventImage:
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
                 break;
             case R.id.btnAddEvent:
-                addEvent();
+                uploadImage();
                 break;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                addEventImage.setImageBitmap(bitmap);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private String getFileExtension(Uri uri)
+    {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadImage() {
+
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+                StorageReference ref = storageReference.child("images/"+ System.currentTimeMillis() + "." + getFileExtension(filePath));
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+//                            imgUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                                Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                                while (!urlTask.isSuccessful());
+                                downloadUrl = urlTask.getResult();
+//                                String uri = taskSnapshot.getStorage().getDownloadUrl().toString();
+//                            Toast.makeText(AddEventActivity.this, "url : "+downloadUrl.toString(), Toast.LENGTH_SHORT).show();
+                            addEvent();
+//                            Log.d("GAJELAS","URL : "+downloadUrl.toString());
+                            sucesss = true;
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(AddEventActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            sucesss = false;
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
         }
     }
 
     public void addEvent()
     {
-      String name = addEventName.getText().toString();
-      String desc = addEventDesc.getText().toString();
-      String date = addEventDate.getText().toString();
-      String location = addEventLocation.getText().toString();
-      String type = addEventType.getText().toString();
-      String phone = addEventPhone.getText().toString();
-      String email = addEventEmail.getText().toString();
-      String address = addEventAddress.getText().toString();
+            String name = addEventName.getText().toString();
+            String desc = addEventDesc.getText().toString();
+            String date = addEventDate.getText().toString();
+            String location = addEventLocation.getText().toString();
+            String type = addEventType.getText().toString();
+            String phone = addEventPhone.getText().toString();
+            String email = addEventEmail.getText().toString();
+            String address = addEventAddress.getText().toString();
 
-      Double price = Double.parseDouble(addEventPrice.getText().toString().trim());
-        //checking if the value is provided
-        if (!TextUtils.isEmpty(name)) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String userMail = user.getEmail();
 
-            //getting a unique id using push().getKey() method
-            //it will create a unique id and we will use it as the Primary Key for our Artist
-            String id = myRef.push().getKey();
-            //creating an Event Object
-            Event event = new Event(name, desc,address,location,type,date,email,phone,price);
-            //Saving the Event
-            myRef.child(id).setValue(event);
+            Double price = Double.parseDouble(addEventPrice.getText().toString().trim());
+            //checking if the value is provided
+            if (!TextUtils.isEmpty(name)) {
 
-            //displaying a success toast
-            Toast.makeText(this, "Event added", Toast.LENGTH_LONG).show();
-        } else {
-            //if the value is not given displaying a toast
-            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
-        }
+                //getting a unique id using push().getKey() method
+                //it will create a unique id and we will use it as the Primary Key for our Artist
+                String id = myRef.push().getKey();
+                //creating an Event Object
+                Event event = new Event(id,name, desc,address,location,type,date,email,phone,price,userMail,downloadUrl.toString());
+                //Saving the Event
+                myRef.child(id).setValue(event);
+                //displaying a success toast
+                Toast.makeText(this, "Event added", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this,ShowListActivity.class);
+                startActivity(intent);
+            } else {
+                //if the value is not given displaying a toast
+                Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
+            }
     }
 }

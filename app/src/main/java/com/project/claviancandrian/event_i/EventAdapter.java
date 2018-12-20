@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapterViewHolder> {
@@ -35,12 +38,20 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
     @Override
     public void onBindViewHolder(@NonNull EventAdapter.EventAdapterViewHolder holder, final int i) {
 
-        holder.imgEvent.setImageResource(Data.eventList.get(i).getImage());
-        holder.txtNamaEvent.setText(Data.eventList.get(i).getName());
-        holder.txtEventDate.setText(Data.eventList.get(i).getDate());
-        holder.txtEventLocation.setText(Data.eventList.get(i).getCity());
-        holder.txtEventPrice.setText(Data.eventList.get(i).getPrice().toString());
-        holder.txtEventType.setText(Data.eventList.get(i).getType());
+//        Glide.with(context).load();
+//        holder.imgEvent.setImageResource(Data.eventList.get(i).getImage());
+        Glide.with(context)
+                .load(eventArrayList.get(i).getImage())
+                .thumbnail(0.5f)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.imgEvent);
+
+        holder.txtNamaEvent.setText(eventArrayList.get(i).getName());
+        holder.txtEventDate.setText(eventArrayList.get(i).getDate());
+        holder.txtEventLocation.setText(eventArrayList.get(i).getCity());
+        holder.txtEventPrice.setText(eventArrayList.get(i).getPrice().toString());
+        holder.txtEventType.setText(eventArrayList.get(i).getType());
 
 
         holder.cardEvent.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +68,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
 
     @Override
     public int getItemCount() {
-        return 0;
+        return eventArrayList.size();
     }
 
     public class EventAdapterViewHolder extends RecyclerView.ViewHolder {

@@ -210,6 +210,7 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
                 <EditText
+                    android:enabled="false"
                     android:id="@+id/detailEventAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
