@@ -32,10 +32,7 @@ public class ShowListActivity extends AppCompatActivity {
 
     /**
      * TODO
-     * 2. Get Event Data From Firebase
-     * 3. Populate Event from Firebase
-     * 4. Realtime Event List
-     * 5. Create Activity and something for Event Organizer
+     * 1. Setting fab Button, kalau Event Organizer button muncul, klo pengguna biasa, Button Hilang
      */
 
     ArrayList<Event> arrayEvent = new ArrayList<>();
@@ -54,10 +51,12 @@ public class ShowListActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-
+                arrayEvent.clear();
+                Data.eventList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Event event = dataSnapshot1.getValue(Event.class);
                     arrayEvent.add(event);
+                    Data.eventList.add(event);
 //                    Log.d("UYUH", Data.eventList.get(0).getCity());
                 }
                 adapter = new EventAdapter(arrayEvent, getApplicationContext());

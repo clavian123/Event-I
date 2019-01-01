@@ -238,6 +238,18 @@
             android:layout_width="match_parent"
             android:layout_height="267dp" />
 
+        <Button
+            android:id="@+id/btnDetailEditt"
+            android:layout_width="260dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_green"
+            android:gravity="center"
+            android:text="EDIT EVENT"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
+
     </LinearLayout>
 
 </ScrollView>

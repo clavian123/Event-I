@@ -38,12 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
-
-    /**
-     * TODO
-     * Harusnya Selesai
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

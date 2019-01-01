@@ -3,6 +3,7 @@ package com.project.claviancandrian.event_i;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,12 +14,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +37,10 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvForgotPassword;
     @BindView(R.id.progress)
     ProgressBar progress;
+    @BindView(R.id.btnLoginFacebook)
+    Button btnLoginFacebook;
+    @BindView(R.id.btnLoginGoogle)
+    Button btnLoginGoogle;
     private FirebaseAuth mAuth;
 
     EditText txtEmail;
@@ -40,11 +51,14 @@ public class LoginActivity extends AppCompatActivity {
     String Password;
     CheckBox cbTerms;
 
+    private final static int RC_SIGN_IN = 123;
+    GoogleSignInClient mGoogleSignInClient;
+    FirebaseAuth.AuthStateListener mAuthListner;
+
     /**
      * TODO
-     * 3. Login with Facebook
-     * 4. Login with Google Account
-     * 5. Custom Login for Event Organizer
+     * 1. Login with Facebook
+     * 2. Custom Login for Event Organizer
      */
 
     @Override
@@ -57,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.txtPassword);
         btLogin = findViewById(R.id.btLogin);
         btRegister = findViewById(R.id.btRegister);
-
+// ...
 //        Batas Awal Firebase
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 //        Batas Akhir Firebase
 
@@ -88,7 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Toast.makeText(LoginActivity.this, "Welcome " + user, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(LoginActivity.this, ShowListActivity.class);
-                                    intent.putExtra("user", user);
+                                    intent.putExtra("user", user.getEmail());
+                                    finish();
                                     startActivity(intent);
                                     progress.setVisibility(View.GONE);
 //                            updateUI(user);
@@ -150,6 +166,59 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w("tag", "Google sign in failed", e);
+                // ...
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d("tag", "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("tag", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(LoginActivity.this, ShowListActivity.class);
+                            intent.putExtra("user", user.getDisplayName());
+                            finish();
+                            startActivity(intent);
+//                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("tag", "signInWithCredential:failure", task.getException());
+//                            updateUI(null);
+                        }
+                        // ...
+                    }
+                });
+    }
+
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -162,5 +231,16 @@ public class LoginActivity extends AppCompatActivity {
     public void onViewClicked() {
         Intent intent = new Intent(this, ForgetPasswordActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick({R.id.btnLoginFacebook, R.id.btnLoginGoogle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btnLoginFacebook:
+                break;
+            case R.id.btnLoginGoogle:
+                    signIn();
+                break;
+        }
     }
 }

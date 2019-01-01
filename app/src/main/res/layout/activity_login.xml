@@ -107,6 +107,7 @@
             android:textSize="15dp" />
 
         <Button
+            android:id="@+id/btnLoginFacebook"
             android:layout_width="260dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
@@ -121,6 +122,7 @@
             android:textSize="15dp" />
 
         <Button
+            android:id="@+id/btnLoginGoogle"
             android:layout_width="260dp"
             android:layout_height="45dp"
             android:layout_gravity="center"

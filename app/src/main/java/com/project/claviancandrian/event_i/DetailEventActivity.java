@@ -1,15 +1,21 @@
 package com.project.claviancandrian.event_i;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.maps.MapView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailEventActivity extends AppCompatActivity {
 
@@ -35,6 +41,10 @@ public class DetailEventActivity extends AppCompatActivity {
     EditText detailEventAddress;
     @BindView(R.id.mapDetail)
     MapView mapDetail;
+    @BindView(R.id.btnDetailEditt)
+    Button btnDetailEditt;
+
+    Integer pos = 0;
 
     /**
      * TODO
@@ -50,8 +60,18 @@ public class DetailEventActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            Integer pos = bundle.getInt("posisi");
-//            detailEventImage.setImageResource(Data.eventList.get(pos).getImage());
+            pos = bundle.getInt("posisi");
+
+            Log.d("EXTRAS", String.valueOf(pos));
+            Log.d("SIZE", String.valueOf(Data.eventList.size()));
+
+            Glide.with(this)
+                    .load(Data.eventList.get(pos).getImage())
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(detailEventImage);
+
             detailEventName.setText(Data.eventList.get(pos).getName());
             detailEventDetail.setText(Data.eventList.get(pos).getDesc());
             tvDetailDate.setText(Data.eventList.get(pos).getDate());
@@ -61,6 +81,14 @@ public class DetailEventActivity extends AppCompatActivity {
             tvDetailContact.setText(Data.eventList.get(pos).getCpTelp());
             tvDetailEmail.setText(Data.eventList.get(pos).getCpEmail());
             detailEventAddress.setText(Data.eventList.get(pos).getCpEmail());
+//            detailEventImage.setImageResource(Data.eventList.get(pos).getImage());
         }
+    }
+
+    @OnClick(R.id.btnDetailEditt)
+    public void onViewClicked() {
+        Intent intent = new Intent(this,ModifyEventActivity.class);
+        intent.putExtra("pos",pos);
+        startActivity(intent);
     }
 }

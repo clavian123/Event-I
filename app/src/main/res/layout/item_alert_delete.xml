@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="311dp"
+    android:layout_height="191dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alert !"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="21dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you sure want to delete this event ?"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="37dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_margin="8dp"
+                android:id="@+id/btnAlertYes"
+                android:layout_width="112dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_red"
+                android:gravity="center"
+                android:text="Yes"
+                android:textColor="@android:color/white"
+                android:textSize="15dp" />
+
+            <Button
+                android:layout_margin="8dp"
+                android:id="@+id/btnAlertNo"
+                android:layout_width="112dp"
+                android:layout_height="45dp"
+                android:background="@drawable/btn_green"
+                android:gravity="center"
+                android:text="No"
+                android:textColor="@android:color/white"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
