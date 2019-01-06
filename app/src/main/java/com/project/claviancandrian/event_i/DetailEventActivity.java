@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,18 +40,12 @@ public class DetailEventActivity extends AppCompatActivity {
     TextView tvDetailEmail;
     @BindView(R.id.detailEventAddress)
     EditText detailEventAddress;
-    @BindView(R.id.mapDetail)
-    MapView mapDetail;
     @BindView(R.id.btnDetailEditt)
     Button btnDetailEditt;
 
     Integer pos = 0;
-
-    /**
-     * TODO
-     * 1. Ambil lokasi gMap trus tampilin di Map
-     */
-
+    String source = "";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +56,12 @@ public class DetailEventActivity extends AppCompatActivity {
 
         if (bundle != null) {
             pos = bundle.getInt("posisi");
+            source = bundle.getString("source");
+
+            if (source.equals("none"))
+            {
+                btnDetailEditt.setVisibility(View.GONE);
+            }
 
             Log.d("EXTRAS", String.valueOf(pos));
             Log.d("SIZE", String.valueOf(Data.eventList.size()));

@@ -65,6 +65,7 @@
                     android:drawableStart="@drawable/calendar"
                     android:drawablePadding="10dp"
                     android:hint="Event Date"
+                    android:focusable="false"
                     app:layout_constraintBottom_toBottomOf="@+id/tvDetailPrice"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -81,6 +82,7 @@
                     android:drawableStart="@drawable/money"
                     android:drawablePadding="10dp"
                     android:hint="Event Price"
+                    android:inputType="numberDecimal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/addEventDate" />
@@ -231,19 +233,6 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_marginTop="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/addMap"
-            android:layout_width="match_parent"
-            android:layout_height="267dp" />
 
         <Button
             android:id="@+id/btnAddEvent"

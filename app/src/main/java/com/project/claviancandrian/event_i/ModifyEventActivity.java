@@ -1,5 +1,6 @@
 package com.project.claviancandrian.event_i;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -36,6 +38,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,8 +67,6 @@ public class ModifyEventActivity extends AppCompatActivity {
     EditText modifEventMail;
     @BindView(R.id.modifEventAddress)
     EditText modifEventAddress;
-    @BindView(R.id.modifMap)
-    MapView modifMap;
     @BindView(R.id.btnModifEvent)
     Button btnModifEvent;
     @BindView(R.id.btnRemoveEvent)
@@ -89,6 +91,8 @@ public class ModifyEventActivity extends AppCompatActivity {
 
     Boolean sucesss = false;
 
+    final Calendar myCalendar = Calendar.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +108,7 @@ public class ModifyEventActivity extends AppCompatActivity {
         if (bundle != null) {
             pos = bundle.getInt("pos");
         }
+
         Glide.with(this)
                 .load(Data.eventList.get(pos).getImage())
                 .thumbnail(0.5f)
@@ -114,12 +119,43 @@ public class ModifyEventActivity extends AppCompatActivity {
         modifEventName.setText(Data.eventList.get(pos).getName());
         modifEventDesc.setText(Data.eventList.get(pos).getDesc());
         modifEventDate.setText(Data.eventList.get(pos).getDate());
-        modifEventPrice.setText(Data.eventList.get(pos).getPrice().toString());
+        modifEventPrice.setText(Data.eventList.get(pos).getPrice());
         modifEvenLocation.setText(Data.eventList.get(pos).getLocation());
         modifEventType.setText(Data.eventList.get(pos).getType());
         modifEventPhone.setText(Data.eventList.get(pos).getCpTelp());
         modifEventMail.setText(Data.eventList.get(pos).getCpEmail());
         modifEventAddress.setText(Data.eventList.get(pos).getCpEmail());
+
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        modifEventDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(ModifyEventActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void updateLabel() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+        modifEventDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     @OnClick({R.id.modifEventImage, R.id.btnModifEvent, R.id.btnRemoveEvent})
@@ -156,11 +192,11 @@ public class ModifyEventActivity extends AppCompatActivity {
         String phone = modifEventPhone.getText().toString();
         String email = modifEventMail.getText().toString();
         String address = modifEventAddress.getText().toString();
+        String price = modifEventPrice.getText().toString();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userMail = user.getEmail();
 
-        Double price = Double.parseDouble(modifEventPrice.getText().toString().trim());
         //checking if the value is provided
         if (!TextUtils.isEmpty(name)) {
 

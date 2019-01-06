@@ -1,5 +1,6 @@
 package com.project.claviancandrian.event_i;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -36,6 +38,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,8 +70,6 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     EditText addEventAddress;
     @BindView(R.id.btnAddEvent)
     Button btnAddEvent;
-    @BindView(R.id.addMap)
-    MapView addMap;
 //    map initialize
 
     private Uri filePath;
@@ -84,10 +87,8 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     FirebaseStorage storage;
     StorageReference storageReference;
 
-    /**
-     * TODO
-     * tinggal ambil lokasi dari gMap trus push
-     */
+    final Calendar myCalendar = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +100,36 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         storageReference = storage.getReference();
         myRef = FirebaseDatabase.getInstance().getReference();
 
-        addMap.getMapAsync(this);
 
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        addEventDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(AddEventActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void updateLabel() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+        addEventDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     @OnClick({R.id.addEventImage, R.id.btnAddEvent})
@@ -191,11 +220,12 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         String phone = addEventPhone.getText().toString();
         String email = addEventEmail.getText().toString();
         String address = addEventAddress.getText().toString();
+        String price = addEventPrice.getText().toString();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userMail = user.getEmail();
 
-        Double price = Double.parseDouble(addEventPrice.getText().toString().trim());
+//        Double price = Double.parseDouble(addEventPrice.getText().toString().trim());
         //checking if the value is provided
         if (!TextUtils.isEmpty(name)) {
 

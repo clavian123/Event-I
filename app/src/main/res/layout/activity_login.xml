@@ -106,20 +106,20 @@
             android:textColor="@android:color/white"
             android:textSize="15dp" />
 
-        <Button
-            android:id="@+id/btnLoginFacebook"
-            android:layout_width="260dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_login"
-            android:drawableLeft="@drawable/facebook"
-            android:gravity="center"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp"
-            android:text="LOGIN WITH FACEBOOK"
-            android:textColor="@android:color/white"
-            android:textSize="15dp" />
+        <!--<Button-->
+            <!--android:id="@+id/btnLoginFacebook"-->
+            <!--android:layout_width="260dp"-->
+            <!--android:layout_height="45dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/btn_login"-->
+            <!--android:drawableLeft="@drawable/facebook"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingHorizontal="15dp"-->
+            <!--android:paddingVertical="10dp"-->
+            <!--android:text="LOGIN WITH FACEBOOK"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="15dp" />-->
 
         <Button
             android:id="@+id/btnLoginGoogle"
@@ -136,10 +136,5 @@
             android:textColor="@android:color/white"
             android:textSize="15dp" />
 
-        <ProgressBar
-            android:id="@+id/progressBar4"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>

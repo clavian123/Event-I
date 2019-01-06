@@ -18,7 +18,7 @@ public class Event {
 
     private String owner;
 
-    private Double price;
+    private String price;
 
     private String image;
 
@@ -26,7 +26,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String id, String name, String desc, String location, String city, String type, String date, String cpEmail, String cpTelp, Double price, String owner, String image) {
+    public Event(String id, String name, String desc, String location, String city, String type, String date, String cpEmail, String cpTelp, String price, String owner, String image) {
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -129,11 +129,11 @@ public class Event {
         this.cpTelp = cpTelp;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

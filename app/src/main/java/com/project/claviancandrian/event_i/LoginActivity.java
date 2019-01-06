@@ -37,8 +37,6 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvForgotPassword;
     @BindView(R.id.progress)
     ProgressBar progress;
-    @BindView(R.id.btnLoginFacebook)
-    Button btnLoginFacebook;
     @BindView(R.id.btnLoginGoogle)
     Button btnLoginGoogle;
     private FirebaseAuth mAuth;
@@ -55,12 +53,6 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth.AuthStateListener mAuthListner;
 
-    /**
-     * TODO
-     * 1. Login with Facebook
-     * 2. Custom Login for Event Organizer
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.txtPassword);
         btLogin = findViewById(R.id.btLogin);
         btRegister = findViewById(R.id.btRegister);
+
 // ...
 //        Batas Awal Firebase
 
@@ -103,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Toast.makeText(LoginActivity.this, "Welcome " + user, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(LoginActivity.this, ShowListActivity.class);
+                                    intent.putExtra("source","mail");
                                     intent.putExtra("user", user.getEmail());
                                     finish();
                                     startActivity(intent);
@@ -203,7 +197,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("tag", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(LoginActivity.this, ShowListActivity.class);
-                            intent.putExtra("user", user.getDisplayName());
+                            intent.putExtra("user", user.getEmail());
+                            intent.putExtra("source","google");
                             finish();
                             startActivity(intent);
 //                            updateUI(user);
@@ -217,13 +212,18 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-
-
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null)
+        {
+            Intent intent = new Intent(this,ShowListActivity.class);
+            intent.putExtra("source","mail");
+            intent.putExtra("user",currentUser.getEmail());
+            startActivity(intent);
+        }
 //        updateUI(currentUser);
     }
 
@@ -233,11 +233,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick({R.id.btnLoginFacebook, R.id.btnLoginGoogle})
+    @OnClick({R.id.btnLoginGoogle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btnLoginFacebook:
-                break;
             case R.id.btnLoginGoogle:
                     signIn();
                 break;

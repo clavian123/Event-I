@@ -22,10 +22,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
 
     private ArrayList<Event> eventArrayList;
     private Context context;
+    private String source;
 
-    public EventAdapter(ArrayList<Event> eventArrayList, Context context) {
+    public EventAdapter(ArrayList<Event> eventArrayList, Context context,String source) {
         this.eventArrayList = eventArrayList;
         this.context = context;
+        this.source = source;
     }
 
     @NonNull
@@ -51,7 +53,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
         holder.txtNamaEvent.setText(eventArrayList.get(i).getName());
         holder.txtEventDate.setText(eventArrayList.get(i).getDate());
         holder.txtEventLocation.setText(eventArrayList.get(i).getCity());
-        holder.txtEventPrice.setText(String.format("%.2f",eventArrayList.get(i).getPrice()));
+//        holder.txtEventPrice.setText(String.format("%.2f",eventArrayList.get(i).getPrice().toString()));
+        holder.txtEventPrice.setText(eventArrayList.get(i).getPrice());
         holder.txtEventType.setText(eventArrayList.get(i).getType());
 
 
@@ -60,6 +63,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
             public void onClick(View v) {
                 Intent intent = new Intent(context,DetailEventActivity.class);
                 intent.putExtra("posisi",i);
+                intent.putExtra("source",source);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Toast.makeText(context, "Event pos "+i+" clicked", Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
