@@ -8,4 +8,5 @@ Event-I adalah aplikasi Mobile berbasis Android yang dapat menampilkan Event yan
 * Login menggunakan Google Account / Register Email
 
 ## Teknologi yang digunakan : 
-* Google Firebase
+* [Firebase Realtime Database](https://firebase.google.com/docs/database) sebagai Media Penyimpanan Data
+* [Firebase Auth](https://firebase.google.com/docs/auth) Untuk Autentikasi User
